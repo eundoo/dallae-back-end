@@ -26,9 +26,6 @@ public class CmmCdEntity extends AuthStampEntity {
     @Column(length = 50, nullable = true)
     private String upperCd;
 
-//    @Column(length = 50, nullable = true)
-//    private String groupCd;
-
     @Column(length = 50, nullable = true)
     private String cmmCdNm;
 

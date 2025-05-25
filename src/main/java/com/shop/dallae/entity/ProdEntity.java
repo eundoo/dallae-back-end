@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 //A상품이 img도 담고있고 문구도 담고있어야하고 어떤 제품인지 결국에 코드로 관리되어야하는데
 @Entity
 @Getter
@@ -15,25 +17,42 @@ public class ProdEntity extends AuthStampEntity {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, length = 50, nullable = false)
+    private String prodId;
+
+    @Column(unique = true, length = 50, nullable = false)
     private String prodCd;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="img_cd", nullable = true, referencedColumnName = "imgCd")
-    private ImgEntity imgCd;
+    @Column(length = 50, nullable = true)
+    private String prodNm;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="phr_cd", nullable = true, referencedColumnName = "phrCd")
-    private PhrEntity phrCd;
+    @Column(length = 50, nullable = true)
+    private String price;
 
-    @Column(nullable = true)
+    @Column(length = 50, nullable = true)
     private String colorCd;
 
-    @Column(nullable = true)
+    @Column(length = 50, nullable = true)
     private String sizeCd;
 
-    @Column(nullable = true)
-    private String price;
+    @Column(length = 50, nullable = true)
+    private String prodTypeCd;
+
+    /* 참조컬럼 매핑 */
+    @OneToMany(mappedBy = "prodId")
+    private List<CartEntity> carts;
+
+    @OneToOne(mappedBy = "prodId")
+    private LikeEntity likes;
+
+    @OneToOne(mappedBy = "prodId")
+    private StockEntity stocks;
+
+    @OneToMany(mappedBy = "prodId")
+    private List<OrderEntity> orders;
+
+    @OneToMany(mappedBy = "prodId")
+    private List<ProdInfoEntity> prodInfos;
 
 //    public static ProdEntity toSaveEntity(ProdDTO prodDTO) {
 //        ProdEntity prodEntity = new ProdEntity();

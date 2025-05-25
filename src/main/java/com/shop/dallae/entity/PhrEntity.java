@@ -20,19 +20,17 @@ public class PhrEntity extends AuthStampEntity {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;
 
-    @Column(length = 50, unique = true, nullable = false)
-    private String phrCd;
+    @Column(unique = true, length = 50, nullable = false)
+    private String phrId;
 
-    //ImgCdEntity 의 imgCd컬럼 외래키로 사용중
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="img_cd", nullable = true, referencedColumnName = "imgCd")
-    private ImgEntity imgCd;
+    @Column(length = 50, nullable = false) 
+    private String phrTitle;
 
     @Column(length = 50, nullable = false)
-    private String groupCd;
+    private String phrTypeCd;
 
     @Column(length = 50, nullable = true)
-    private String phrTitle;
+    private String date;
 
     @Column(length = 50, nullable = true)
     private String phrDesc1;
@@ -42,10 +40,4 @@ public class PhrEntity extends AuthStampEntity {
 
     @Column(length = 50, nullable = true)
     private String phrDesc3;
-
-    @Column(length = 50, nullable = true)
-    private String type;
-
-    @Column(length = 50, nullable = true)
-    private String date;
 }

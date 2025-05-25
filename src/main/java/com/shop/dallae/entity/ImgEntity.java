@@ -2,12 +2,15 @@ package com.shop.dallae.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 //@Data
 //@NoArgsConstructor
@@ -16,8 +19,9 @@ import java.time.LocalDateTime;
 //    private String imgCd;
 //}
 
-//여기 그냥 dallae_img 로 테이블 명 바꿔야할 듯
 @Entity
+@Getter
+@Setter
 @Table(name = "dallae_img")
 public class ImgEntity extends AuthStampEntity {
     @Id
@@ -25,13 +29,19 @@ public class ImgEntity extends AuthStampEntity {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;
 
-    //유니크 중복허용X 외래키로 참조중
     @Column(unique = true, length = 50, nullable = false)
-    private String imgCd;
+    private String imgId;
 
-    @Column(length = 50, nullable = false)
-    private String groupCd;
+    @Column(length = 50, nullable = true)
+    private String imgBrandCd;
+
+    @Column(length = 50, nullable = true)
+    private String imgDesc;
 
     @Column(length = 50, nullable = true)
     private String imgSrc;
+
+    /* 참조컬럼 매핑 */
+    @OneToMany(mappedBy = "imgId")
+    private List<ProdInfoEntity> prodInfos;
 }
