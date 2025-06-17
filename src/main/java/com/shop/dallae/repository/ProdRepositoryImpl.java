@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ProdRepositoryImpl implements ProdRepositoryCustom {
 
         String[] wordBreak = searchedWords.trim().split(" ");
 
+        System.out.println(wordBreak);
 // JPQL 문자열 생성
 // 이거 jpa로 바꿀 수 있을 듯
 // phr는 p.phrCd의 별칭이고,
@@ -30,21 +32,18 @@ public class ProdRepositoryImpl implements ProdRepositoryCustom {
 // JPA는 자동으로 phr가 PhrEntity 타입임을 알 수 있습니다.
         StringBuilder jpql = new StringBuilder("""
         SELECT new com.shop.dallae.dto.ProdDTO(
-            p.id, p.prodCd, p.colorCd, p.sizeCd, p.price,
-            phr.phrCd, phr.phrTitle, phr.phrDesc1, phr.phrDesc2, phr.phrDesc3,
-            phr.groupCd, phr.type, phr.date
+            prodT.id, prodT.prodId, prodT.prodSn, prodT.prodNm, prodT.price, prodT.colorCd, prodT.sizeCd, prodT.prodTypeCd,
+            phrT.phrId, phrT.phrTitle, phrT.phrDesc1, phrT.phrTypeCd, phrT.date
         ) 
-        FROM ProdEntity p
-        JOIN p.phrCd phr
+        FROM ProdEntity prodT, PhrEntity phrT
         WHERE 
         """);
 
         for (int i = 0; i < wordBreak.length; i++) {
             String param = "kw" + i;
             if (i > 0) jpql.append(" OR ");
-            jpql.append("(phr.phrDesc1 LIKE :").append(param)
-                    .append(" OR phr.phrDesc2 LIKE :").append(param)
-                    .append(" OR phr.phrDesc3 LIKE :").append(param).append(")");
+            jpql.append("(prodT.prodNm LIKE :").append(param)
+                    .append(" OR phrT.phrDesc1 LIKE :").append(param).append(")");
         }
 
         // JPQL 실행

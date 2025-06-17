@@ -36,12 +36,11 @@ public class ImgEntity extends AuthStampEntity {
     private String imgBrandCd;
 
     @Column(length = 50, nullable = true)
+    private String prodId;
+
+    @Column(length = 50, nullable = true)
     private String imgDesc;
 
     @Column(length = 50, nullable = true)
     private String imgSrc;
-
-    /* 참조컬럼 매핑 */
-    @OneToMany(mappedBy = "imgId")
-    private List<ProdInfoEntity> prodInfos;
 }

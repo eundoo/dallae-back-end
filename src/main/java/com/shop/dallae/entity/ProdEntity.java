@@ -21,7 +21,7 @@ public class ProdEntity extends AuthStampEntity {
     private String prodId;
 
     @Column(unique = true, length = 50, nullable = false)
-    private String prodCd;
+    private String prodSn;
 
     @Column(length = 50, nullable = true)
     private String prodNm;
@@ -50,9 +50,6 @@ public class ProdEntity extends AuthStampEntity {
 
     @OneToMany(mappedBy = "prodId")
     private List<OrderEntity> orders;
-
-    @OneToMany(mappedBy = "prodId")
-    private List<ProdInfoEntity> prodInfos;
 
 //    public static ProdEntity toSaveEntity(ProdDTO prodDTO) {
 //        ProdEntity prodEntity = new ProdEntity();

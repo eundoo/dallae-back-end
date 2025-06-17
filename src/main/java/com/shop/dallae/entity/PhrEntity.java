@@ -30,14 +30,8 @@ public class PhrEntity extends AuthStampEntity {
     private String phrTypeCd;
 
     @Column(length = 50, nullable = true)
+    private String phrDesc;
+
+    @Column(length = 50, nullable = true)
     private String date;
-
-    @Column(length = 50, nullable = true)
-    private String phrDesc1;
-
-    @Column(length = 50, nullable = true)
-    private String phrDesc2;
-
-    @Column(length = 50, nullable = true)
-    private String phrDesc3;
 }
